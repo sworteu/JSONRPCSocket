@@ -1,4 +1,4 @@
-Module_DutchTools
+JSON-RPC Client Socket
 =================
 
 A class to make calls to a JSON-RPC based server service. 
