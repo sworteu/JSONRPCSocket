@@ -26,33 +26,27 @@ Begin Window WindowMain
    Title           =   "JSON-RPC Example"
    Visible         =   True
    Width           =   600
-   Begin JSONRPCSocket JSONRPC
+   Begin HTTPSocket JSONRPC
       Address         =   ""
-      Debug           =   False
-      Height          =   32
+      BytesAvailable  =   0
+      BytesLeftToSend =   0
+      Handle          =   0
+      httpProxyPort   =   0
       Index           =   -2147483648
-      InitialParent   =   ""
-      LastID          =   0
-      Left            =   40
+      LastErrorCode   =   0
       LockedInPosition=   False
       Port            =   0
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   40
-      Width           =   32
    End
    Begin ServerSocket Server
-      Height          =   32
       Index           =   -2147483648
-      Left            =   40
       LockedInPosition=   False
       MaximumSocketsConnected=   50
       MinimumSocketsAvailable=   2
       Port            =   9999
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   40
-      Width           =   32
    End
    Begin CheckBox CheckBoxServer
       AutoDeactivate  =   True
@@ -457,6 +451,7 @@ Begin Window WindowMain
       UseFocusRing    =   True
       Visible         =   True
       Width           =   560
+      _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
    Begin PushButton PushButtonDisconnect
@@ -533,12 +528,12 @@ End
 
 #tag Events JSONRPC
 	#tag Event
-		Sub RequestReceived(Request As JSONItem, IsNotification As Boolean)
+		Sub RequestReceived(Response As Xojo.Core.Dictionary)
 		  'Only to be used as server
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub ResponseReceived(Response As JSONItem, IsError As Boolean)
+		Sub ResponseReceived(Response As Xojo.Core.Dictionary)
 		  if Not IsError and Response <> nil then
 		    WindowMain.ListboxMessages.AddRow Str(me.LastID), Response.Value("result").StringValue, Response.ToString
 		  elseif Response = nil then
