@@ -24,3 +24,7 @@ TempSaveFile*
 
 # ignore plugins for open source projects
 *.xojo_plugin
+
+# ignore hidden files and gitignore
+.*
+!/.gitignore
