@@ -1,7 +1,8 @@
 JSON-RPC Client Socket
 =================
 
-**NOT WORKING YET
+NOT WORKING YET
+================
 
 A class to make calls to a (HTTP) JSON-RPC based server service. 
 This is a JSONRPC Client Socket, made from Xojo.Net.HTTPSocket (http/1.1).
