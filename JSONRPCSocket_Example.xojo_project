@@ -1,12 +1,11 @@
 Type=Desktop
-RBProjectVersion=2017.011
+RBProjectVersion=2017.021
 MinIDEVersion=20070100
 Class=App;App.xojo_code;&h5C28A7FF;&h0;false
 Window=WindowMain;WindowMain.xojo_window;&h4C24F7FF;&h0;false
 BuildSteps=Build Automation;Build Automation.xojo_code;&h3DE44FFF;&h0;false
 Folder=JSON-RPC Client;JSON-RPC Client;&h225F5FFF;&h0;false
-Module=JSONRPC;JSON-RPC Client/JSONRPC.xojo_code;&h7DB65FFF;&h225F5FFF;false
-Class=HTTPSocket;JSON-RPC Client/JSONRPC/HTTPSocket.xojo_code;&h2DF17FFF;&h7DB65FFF;false
+Class=JSONRPCSocket;JSON-RPC Client/JSONRPCSocket.xojo_code;&h2DF17FFF;&h225F5FFF;false
 DefaultWindow=WindowMain
 MajorVersion=1
 MinorVersion=0

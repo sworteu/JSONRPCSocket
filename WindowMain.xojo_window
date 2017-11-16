@@ -26,273 +26,11 @@ Begin Window WindowMain
    Title           =   "JSON-RPC Example"
    Visible         =   True
    Width           =   600
-   Begin HTTPSocket JSONRPC
-      Address         =   ""
-      BytesAvailable  =   0
-      BytesLeftToSend =   0
-      Handle          =   0
-      httpProxyPort   =   0
-      Index           =   -2147483648
-      LastErrorCode   =   0
-      LockedInPosition=   False
-      Port            =   0
-      Scope           =   0
-      TabPanelIndex   =   0
-   End
-   Begin ServerSocket Server
+   Begin JSONRPCSocket JSONRPC
       Index           =   -2147483648
       LockedInPosition=   False
-      MaximumSocketsConnected=   50
-      MinimumSocketsAvailable=   2
-      Port            =   9999
       Scope           =   0
       TabPanelIndex   =   0
-   End
-   Begin CheckBox CheckBoxServer
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Is Server?"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      State           =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   14
-      Underline       =   False
-      Value           =   False
-      Visible         =   True
-      Width           =   113
-   End
-   Begin PushButton PushButtonListen
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Listen"
-      Default         =   False
-      Enabled         =   False
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   20
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   46
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin PushButton PushButtonConnect
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Connect"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   500
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   46
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin Label LabelPort
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   164
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      Text            =   "Port:"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   14
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   100
-   End
-   Begin TextField TextFieldPort
-      AcceptTabs      =   False
-      Alignment       =   2
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   175
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   "#####"
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "9999"
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   46
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   80
-   End
-   Begin Label LabelAddress
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   326
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Multiline       =   False
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   5
-      TabPanelIndex   =   0
-      Text            =   "Address:"
-      TextAlign       =   1
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   14
-      Transparent     =   False
-      Underline       =   False
-      Visible         =   True
-      Width           =   109
-   End
-   Begin TextField TextFieldAddress
-      AcceptTabs      =   False
-      Alignment       =   2
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   326
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "127.0.0.1"
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   46
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   109
    End
    Begin Label LabelClient
       AutoDeactivate  =   True
@@ -305,11 +43,11 @@ Begin Window WindowMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   500
+      Left            =   480
       LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
+      LockedInPosition=   True
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       Multiline       =   False
       Scope           =   0
@@ -326,80 +64,35 @@ Begin Window WindowMain
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
-   End
-   Begin TextField TextFieldMethod
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   &cFFFFFF00
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   20
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   8
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "online"
-      TextColor       =   &c00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   129
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
       Width           =   100
    End
-   Begin Label LabelMethod
+   Begin PushButton PushButtonSend
       AutoDeactivate  =   True
       Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
+      ButtonStyle     =   "0"
+      Cancel          =   False
+      Caption         =   "Send"
+      Default         =   False
       Enabled         =   True
-      Height          =   20
+      Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   20
+      Left            =   480
       LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
+      LockedInPosition=   True
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
-      Multiline       =   False
       Scope           =   0
-      Selectable      =   False
-      TabIndex        =   9
+      TabIndex        =   15
       TabPanelIndex   =   0
-      Text            =   "Method name:"
-      TextAlign       =   0
-      TextColor       =   &c00000000
+      TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   97
-      Transparent     =   False
+      Top             =   146
       Underline       =   False
       Visible         =   True
       Width           =   100
@@ -431,7 +124,7 @@ Begin Window WindowMain
       Italic          =   False
       Left            =   20
       LockBottom      =   True
-      LockedInPosition=   False
+      LockedInPosition=   True
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
@@ -440,6 +133,7 @@ Begin Window WindowMain
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
+      ShowDropIndicator=   False
       TabIndex        =   11
       TabPanelIndex   =   0
       TabStop         =   True
@@ -454,67 +148,157 @@ Begin Window WindowMain
       _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
-   Begin PushButton PushButtonDisconnect
+   Begin TextField TextFieldMethod
+      AcceptTabs      =   False
+      Alignment       =   0
       AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
       Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Disconnect"
-      Default         =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
       Enabled         =   True
+      Format          =   ""
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
-      InitialParent   =   ""
       Italic          =   False
-      Left            =   500
+      Left            =   20
+      LimitText       =   0
       LockBottom      =   False
-      LockedInPosition=   False
+      LockedInPosition=   True
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
       Scope           =   0
-      TabIndex        =   14
+      TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   "guru.test"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   80
+      Top             =   146
       Underline       =   False
+      UseFocusRing    =   True
       Visible         =   True
-      Width           =   80
+      Width           =   448
    End
-   Begin PushButton PushButtonSend
+   Begin Label LabelMethod
       AutoDeactivate  =   True
       Bold            =   False
-      ButtonStyle     =   "0"
-      Cancel          =   False
-      Caption         =   "Send"
-      Default         =   False
+      DataField       =   ""
+      DataSource      =   ""
       Enabled         =   True
-      Height          =   22
+      Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   500
+      Left            =   20
       LockBottom      =   False
-      LockedInPosition=   False
+      LockedInPosition=   True
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
+      Multiline       =   False
       Scope           =   0
-      TabIndex        =   15
+      Selectable      =   False
+      TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
+      Text            =   "Method name:"
+      TextAlign       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   129
+      Top             =   114
+      Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   80
+      Width           =   448
+   End
+   Begin TextField TextFieldAddress
+      AcceptTabs      =   False
+      Alignment       =   2
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   20
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   True
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   "https://gurujsonrpc.appspot.com/guru"
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   46
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   448
+   End
+   Begin Label LabelAddress
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   20
+      LockBottom      =   False
+      LockedInPosition=   True
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   False
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      Text            =   "Address:"
+      TextAlign       =   0
+      TextColor       =   &c00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   14
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   317
    End
 End
 #tag EndWindow
@@ -528,91 +312,60 @@ End
 
 #tag Events JSONRPC
 	#tag Event
-		Sub RequestReceived(Response As Xojo.Core.Dictionary)
-		  'Only to be used as server
+		Sub ResponseReceived(URL As Text, Response As Xojo.Core.Dictionary)
+		  Dim result As Text 
+		  
+		  Try 
+		    result = Xojo.Data.GenerateJSON(Response)
+		  Catch e As Xojo.Data.InvalidJSONException
+		    result = ""
+		  End Try
+		  
+		  Dim MID As Integer = Response.Value("id")
+		  
+		  ListboxMessages.AddRow Response.Value("result"), result, MID.ToText
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub ResponseReceived(Response As Xojo.Core.Dictionary)
-		  if Not IsError and Response <> nil then
-		    WindowMain.ListboxMessages.AddRow Str(me.LastID), Response.Value("result").StringValue, Response.ToString
-		  elseif Response = nil then
-		    'An exception has been catched
-		    WindowMain.ListboxMessages.AddRow "Exception catched", "no info", ""
-		  else
-		    'Only an error
-		    WindowMain.ListboxMessages.AddRow "Error", Response.Child("error").Value("message").StringValue, Response.ToString
-		  end if
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Connected()
-		  self.Title = WINDOW_TITLE + " - Client Connected"
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events Server
-	#tag Event
-		Function AddSocket() As TCPSocket
-		  Dim sock As TCPSocket = New JSONRPCHost
-		  
-		  WindowMain.Title = WindowMain.WINDOW_TITLE + " - Socked added"
-		  
-		  Return sock
-		  
-		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events CheckBoxServer
-	#tag Event
-		Sub Action()
-		  'Server
-		  PushButtonListen.Enabled = Me.Value
-		  
-		  'Client
-		  PushButtonConnect.Enabled = Not me.Value
-		  TextFieldMethod.Enabled = Not me.Value
-		  PushButtonSend.Enabled = Not me.Value
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButtonListen
-	#tag Event
-		Sub Action()
-		  Server.Listen
-		  
-		  TextFieldAddress.Text = Server.LocalAddress
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButtonConnect
-	#tag Event
-		Sub Action()
-		  JSONRPC.Address = TextFieldAddress.Text
-		  JSONRPC.Port = Val(TextFieldPort.Text)
-		  JSONRPC.Connect()
-		  
+		Sub Error(ErrException As RuntimeException)
+		  ListboxMessages.AddRow "Error", ErrException.Message, ErrException.ErrorNumber.ToText
 		  
 		End Sub
 	#tag EndEvent
-#tag EndEvents
-#tag Events PushButtonDisconnect
 	#tag Event
-		Sub Action()
-		  Server.StopListening()
-		  JSONRPC.Disconnect()
+		Sub RPCError(URL As Text, HTTPStatus As Integer, Response As Xojo.Core.Dictionary)
+		  Dim result As Text 
+		  
+		  Try 
+		    result = Xojo.Data.GenerateJSON(Response)
+		  Catch e As Xojo.Data.InvalidJSONException
+		    result = ""
+		  End Try
+		  
+		  Dim e As Xojo.Core.Dictionary = Response.Value("error")
+		  Dim Message As Text = e.Value("message")
+		  Dim ErrorCode,MsgID As Integer
+		  ErrorCode = e.Value("code")
+		  MsgID = Response.Value("id")
+		  
+		  If Response <> Nil Then
+		    ListboxMessages.AddRow ErrorCode.ToText, Message, MsgID.ToText
+		  Else
+		    ListboxMessages.AddRow "Response is Nil"
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events PushButtonSend
 	#tag Event
 		Sub Action()
-		  if JSONRPC.IsConnected then
-		    Dim j As new JSONItem
-		    j.Append(True)
-		    j.Append("online")
-		    JSONRPC.Method( TextFieldMethod.Text, j )
-		  end if
+		  JSONRPC.URL = TextFieldAddress.Text.ToText
+		  
+		  Dim Params() As Auto
+		  
+		  Params.Append "Hello World!"
+		  
+		  JSONRPC.MethodRequest TextFieldMethod.Text.ToText, Params
 		End Sub
 	#tag EndEvent
 #tag EndEvents

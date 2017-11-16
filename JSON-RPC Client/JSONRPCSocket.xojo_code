@@ -1,12 +1,81 @@
 #tag Class
-Protected Class HTTPSocket
+Protected Class JSONRPCSocket
 Inherits Xojo.Net.HTTPSocket
 	#tag Event
-		Sub DataAvailable()
-		  'When we recieve data, we first need to know if it's actually valid JSON (UTF-8) data.
+		Sub Error(err as RuntimeException)
+		  RaiseEvent Error( err )
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub FileReceived(URL as Text, HTTPStatus as Integer, File as xojo.IO.FolderItem)
+		  'NOT USED as we don't do downloads, just JSON-RPC
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub HeadersReceived(URL as Text, HTTPStatus as Integer)
+		  'Verify if this is an JSON RPC response we received.
 		  
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub PageReceived(URL as Text, HTTPStatus as Integer, Content as xojo.Core.MemoryBlock)
+		  Dim JSONText As Text 
+		  Dim JSON As Xojo.Core.Dictionary 'No batch responses allowed (yet)
+		   
+		  JSONText = Xojo.Core.TextEncoding.UTF8.ConvertDataToText(Content)
 		  
+		  Try
+		    JSON = Xojo.Data.ParseJSON(JSONText)
+		  Catch e As Xojo.Data.InvalidJSONException
+		    RaiseEvent Error( e )
+		    Return 'Don't move on, as the JSON is not valid
+		  End Try
 		  
+		  Select Case HTTPStatus
+		  Case 200
+		    'Message received OK
+		    
+		    If JSON.HasKey("result") = True And JSON.HasKey("error") = True Then
+		      'incorrect message, trow error
+		      RaiseEvent RPCError(URL, HTTPStatus, JSON)
+		    End If
+		    
+		    If JSON.HasKey("result") Then
+		      'Message success
+		      
+		      If JSON.HasKey("id") Then
+		        'id Key is there
+		        
+		        RaiseEvent ResponseReceived(URL, JSON)
+		        
+		      Else
+		        'No id ?!? - required, trow error
+		        
+		        RaiseEvent RPCError(URL, HTTPStatus, JSON)
+		        
+		      End If
+		      
+		    Else
+		      If JSON.HasKey("error") Then
+		        
+		        'JSON RPCError 
+		        RaiseEvent RPCError(URL, HTTPStatus, JSON)
+		        
+		      Else
+		        'No result key or error key ?!?
+		        
+		      End If
+		    End If
+		    
+		  Else
+		    'HTTP Error 
+		    
+		    RaiseEvent RPCError(URL, HTTPStatus, JSON)
+		    
+		  End Select
 		End Sub
 	#tag EndEvent
 
@@ -31,47 +100,59 @@ Inherits Xojo.Net.HTTPSocket
 		  
 		  'Set URL trough the URL computed property
 		  Self.URL = RemoteURL
+		  
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Shared Function GetNewID() As UInt64
-		  JSONRPC.HTTPSocket.LastID = ( JSONRPC.HTTPSocket.LastID + 1 )
-		  
-		  Return JSONRPC.HTTPSocket.LastID
-		End Function
-	#tag EndMethod
-
 	#tag Method, Flags = &h0
-		Sub MethodRequest(Method As Text, Params() As Auto)
+		Sub MethodRequest(Method As Text, Optional Params() As Auto)
 		  'Creates a JSON RPC request with an id, method and optional params
+		  Static LastID As Integer = 1
+		  
+		  Dim JSONText As Text
+		  Dim Data As Xojo.Core.MemoryBlock
 		  
 		  'Stop doing anything if the Method name is not set.
 		  If Method = "" Then Return
 		  
-		  'Get a new JSON RPC ID for this Request.
-		  Dim ID As UInt64 = JSONRPC.HTTPSocket.GetNewID
-		  
 		  'Create a Xojo.Core.Dictionary for easy JSON creation
 		  Dim Req As New Xojo.Core.Dictionary
 		  
+		  'Add the required json-rpc version
 		  Req.Value("jsonrpc") = JSONRPC_VERSION
+		  
+		  'Add the method value
 		  Req.Value("method") = Method
-		  Req.Value("params") = 
-		  Req.Value("id") = ID
+		  
+		  'Add the params value
+		  If Params <> Nil Then
+		    If Params.Ubound <> -1 Then
+		      Req.Value("params") = Params 'Array of items
+		    End If
+		  End If
+		  
+		  'Add the id value
+		  Req.Value("id") = LastID
+		  
+		  'Set mLastSendID
+		  mLastSendID = LastID
 		  
 		  'Clear RequestHeaders in case these are automaticly set.
 		  Self.ClearRequestHeaders
 		  
 		  'Set the POST content and mime type (content-type), then send
-		  Self.SetRequestContent( Xojo.Data.GenerateJSON( Req ), "application/json" )
+		  JSONText = Xojo.Data.GenerateJSON( Req )
+		  Data = Xojo.Core.TextEncoding.UTF8.ConvertTextToData(JSONText)
+		  Self.SetRequestContent( Data, "application/json" )
 		  Self.Send("POST", xURL)
 		  
+		  'Make a new LastID for the next rpc method call
+		  LastID = LastID + 1
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub NotificationRequest(Method As Text, Params() As Auto)
+		Sub NotificationRequest(Method As Text, Optional Params() As Auto)
 		  'Creates a JSON RPC notification (a request without id and without response)
 		  
 		  'Stop doing anything if the Method name is not set.
@@ -79,23 +160,48 @@ Inherits Xojo.Net.HTTPSocket
 		  
 		  'Create a Xojo.Core.Dictionary for easy JSON creation
 		  Dim Req As New Xojo.Core.Dictionary
+		  Dim Data As Xojo.Core.MemoryBlock
+		  Dim JSONText As Text
 		  
+		  'Add the json-rpc version to the Notification
 		  Req.Value("jsonrpc") = JSONRPC_VERSION
+		  
+		  'Add the method name to the Notification
 		  Req.Value("method") = Method
-		  Req.Value("params") = 
+		  
+		  'Add the paramters to the Notification 
+		  If Params <> Nil Then
+		    If Params.Ubound <> -1 Then
+		      If Params.Ubound = 0 Then
+		        Req.Value("params") = Params(0) 'Single item
+		      Else
+		        Req.Value("params") = Params 'Array of items
+		      End If
+		    End If
+		  End If
 		  
 		  'Clear RequestHeaders in case these are automaticly set.
 		  Self.ClearRequestHeaders
 		  
 		  'Set the POST content and mime type (content-type), then send
-		  Self.SetRequestContent( Xojo.Data.GenerateJSON( Req ), "application/json" )
+		  JSONText = Xojo.Data.GenerateJSON( Req )
+		  Data = Xojo.Core.TextEncoding.UTF8.ConvertTextToData(JSONText)
+		  Self.SetRequestContent( Data, "application/json" )
 		  Self.Send("POST", xURL)
 		End Sub
 	#tag EndMethod
 
 
 	#tag Hook, Flags = &h0
-		Event ResponseReceived(Response As Xojo.Core.Dictionary)
+		Event Error(ErrException As RuntimeException)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event ResponseReceived(URL As Text, Response As Xojo.Core.Dictionary)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event RPCError(URL As Text, HTTPStatus As Integer, Response As Xojo.Core.Dictionary)
 	#tag EndHook
 
 
@@ -111,7 +217,7 @@ Inherits Xojo.Net.HTTPSocket
 
 
 	#tag Property, Flags = &h21
-		Private Shared LastID As Integer = 1
+		Private mLastSendID As Integer = 1
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
@@ -164,28 +270,17 @@ Inherits Xojo.Net.HTTPSocket
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="Address"
-			Visible=true
-			Group="Behavior"
-			Type="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Debug"
-			Group="Behavior"
-			InitialValue="False"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
-			EditorType="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="LastID"
-			Group="Behavior"
+			Name="Left"
+			Visible=true
+			Group="Position"
+			InitialValue="0"
 			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
@@ -193,21 +288,29 @@ Inherits Xojo.Net.HTTPSocket
 			Visible=true
 			Group="ID"
 			Type="String"
-			EditorType="String"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Port"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
 			Type="String"
-			EditorType="String"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Top"
+			Visible=true
+			Group="Position"
+			InitialValue="0"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="URL"
+			Group="Behavior"
+			Type="Text"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ValidateCertificates"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
