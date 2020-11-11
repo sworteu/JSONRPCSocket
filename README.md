@@ -1,3 +1,6 @@
+Deprecated, this repository is for historical purposes only.
+A newer TCPSocket based version will be launched soon.
+
 JSON-RPC Client Socket
 =================
 
